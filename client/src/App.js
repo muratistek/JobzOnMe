@@ -1,6 +1,11 @@
+import Landing from './pages/Landing'
+
 function App() {
   return (
-    <h1>JobzOnMe</h1>
+    <div>
+      <h1>JobzOnMe</h1>
+      <Landing />
+    </div>
   );
 }
 
