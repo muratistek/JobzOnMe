@@ -2,6 +2,7 @@ import React from 'react'
 import main from '../assets/images/main.png'
 import Wrapper from '../assets/wrappers/LandingPage'
 import { Logo } from '../components'
+import { Link } from 'react-router-dom'
 
 const Landing = () => {
   return (
@@ -21,7 +22,7 @@ const Landing = () => {
             Don't miss out on your dream job because of disorganization. Sign up for JobzOnMe today and take control of your job search.
 
           </p>
-          <button className='btn btn-hero'>Login/Register</button>
+          <Link to="/register" className='btn btn-hero'>Login/Register</Link>
         </div>
         <img src={main} alt="job hunting journey" className='img main-img' />
       </div>
