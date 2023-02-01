@@ -28,10 +28,7 @@ const Register = () => {
         <Logo />
         <h3>Login</h3>
         {/* name input field */}
-        <div className="form-row">
-          <label htmlFor="name" className='form-label'>Name</label>
-          <input type="text" value={values.name} name="name" onChange={handleChange} className="form-input" />
-        </div>
+        <FormRow type="text" name="name" value={values.name} handleChange={handleChange} labelText="Name" />
         <button type='submit' className='btn btn-block'>Submit</button>
       </form>
     </Wrapper>
