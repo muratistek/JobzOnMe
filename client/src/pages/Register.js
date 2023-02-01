@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Logo, FormRow } from '../components'
+import { Logo, FormRow, Alert } from '../components'
 import Wrapper from '../assets/wrappers/RegisterPage'
 
 const initialState = {
