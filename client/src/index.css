@@ -27,7 +27,7 @@ html {
   --primary-900: #044e54;
 
   --primary2-500: #209CEE;
-
+  --primary2-700: #0074D9;
   /* grey */
   --grey-50: #f0f4f8;
   --grey-100: #d9e2ec;
@@ -168,7 +168,7 @@ ul {
 }
 
 .btn:hover {
-  background: var(--primary-700);
+  background: var(--primary2-700);
   box-shadow: var(--shadow-3);
 }
 
