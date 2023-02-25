@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Web app that allows to track job application of a client",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
