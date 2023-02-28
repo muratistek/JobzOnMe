@@ -6,6 +6,6 @@ import { register, login, updateUser } from "../controllers/authController.js";
 // Routes
 router.route('/register').post(register)
 router.route('/login').post(login)
-router.route('/update').patch(updateUser)
+router.route('/updateUser').patch(updateUser)
 
 export default router
