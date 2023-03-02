@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes"
 
 const errorHandlerMiddleware = (err, req, res, next) => {
-  console.log(err);
+  console.log(err.message);
   const defaultError = {
     statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-    msg: "There was some error"
+    msg: err.message || "There was some error"
   }
 
   if (err.name === "ValidationError") {
@@ -15,6 +15,11 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
     // More detailed message
     defaultError.msg = Object.values(err.errors).map((item) => item.message).join(',')
+  }
+  if (err.code && err.code === 11000) {
+    defaultError.statusCode = StatusCodes.BAD_REQUEST
+    // This will output the field name where the unique property catch an error
+    defaultError.msg = `The ${Object.keys(err.keyValue)} field has to be unique`
   }
 
   // res.status(defaultError.statusCode).json({ msg: err });
