@@ -1,11 +1,19 @@
 import User from "../models/User.js"
 import { StatusCodes } from "http-status-codes"
 
+// Custom Error
+class CustomAPIError extends Error {
+  constructor(message) {
+    super(message)
+    this.statusCode = StatusCodes.BAD_REQUEST
+  }
+}
+
 const register = async (req, res) => {
   const { name, email, password } = req.body
 
   if (!name || !email || !password) {
-    throw new Error('Provide values for the required fields')
+    throw new CustomAPIError('Provide values for the required fields')
   }
 
   const user = await User.create({ name, email, password })
