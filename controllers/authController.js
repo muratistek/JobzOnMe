@@ -11,6 +11,13 @@ const register = async (req, res) => {
     throw new BadRequestError('Provide values for the required fields')
   }
 
+  // Find a user with the provided email field to prevent duplicate
+  const userExists = await User.findOne({ email })
+
+  if (userExists) {
+    throw new BadRequestError("Provided email is already in use. Try different email")
+  }
+
   const user = await User.create({ name, email, password })
   res.status(StatusCodes.CREATED).json({ user })
 }
