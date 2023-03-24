@@ -13,7 +13,7 @@ const initialState = {
 const Register = () => {
   const [values, setValues] = useState(initialState)
   // global state and useNavigate
-  const { isLoading, showAlert, displayAlert } = useAppContext()
+  const { isLoading, showAlert, displayAlert, registerUser } = useAppContext()
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember })
@@ -30,7 +30,13 @@ const Register = () => {
       displayAlert()
       return
     }
-    console.log(values);
+    const currentUser = { name, email, password }
+    if (isMember) {
+      console.log("already a member")
+    }
+    else {
+      registerUser(currentUser)
+    }
   }
 
   return (
@@ -65,7 +71,7 @@ const Register = () => {
           handleChange={handleChange}
           labelText="Password"
         />
-        <button type='submit' className='btn btn-block'>Submit</button>
+        <button type='submit' className='btn btn-block' disabled={isLoading}>Submit</button>
         <p>
           {values.isMember ? "Not a member yet? " : "Already a member?"}
           <button type="button" onClick={toggleMember} className='member-btn'>{values.isMember ? "Register" : "Login"}</button>
