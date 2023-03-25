@@ -34,6 +34,7 @@ const Register = () => {
     }
     const currentUser = { name, email, password }
     if (isMember) {
+      // "name" property here will be an empty string. It won't affect the functionality
       loginUser(currentUser)
     }
     else {
