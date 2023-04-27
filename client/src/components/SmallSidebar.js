@@ -18,7 +18,23 @@ const SmallSidebar = () => {
           <header>
             <Logo styleLogo={{ width: "164px", height: "50px" }} />
           </header>
-          <div className="nav-links">nav links</div>
+          <div className="nav-links">
+            {links.map((link) => {
+              const { path, text, icon, id } = link
+
+              return (
+                <NavLink
+                  to={path}
+                  key={id}
+                  onClick={toggleSidebar}
+                  className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                >
+                  <span className="icon">{icon}</span>
+                  {text}
+                </NavLink>
+              )
+            })}
+          </div>
         </div>
       </div>
     </Wrapper>
