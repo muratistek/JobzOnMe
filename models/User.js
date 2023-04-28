@@ -42,8 +42,14 @@ const UserSchema = new mongoose.Schema({
 
 // Setting up the middleware for registering 
 UserSchema.pre('save', async function () {
-  // const salt = await bcrypt.genSalt(10)
-  // this.password = await bcrypt.hash(this.password, salt)
+  // This function will return the field names that we are updating in the database (that are different from ones we have on the database).
+
+  // console.log(this.modifiedPaths())
+
+  // This is crucial because we should hash the password only once, otherwise login won't work. Also, it prevents the error where we don't provide the "password" field in some controller methods and "bcrypt.hash()" triggers error
+  if (!this.isModified('password')) return
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
 })
 
 // Generate a token
