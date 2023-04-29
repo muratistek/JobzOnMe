@@ -39,11 +39,34 @@ const AppProvider = ({ children }) => {
 
   // Setting Axios custom instance
   const authFetch = axios.create({
-    baseURL: "/api/v1/",
-    headers: {
-      Authorization: `Bearer ${state.token}`,
-    }
+    baseURL: "/api/v1"
   })
+
+  // Setup an axios interceptor that will serve as a middleware when we use the "authFetch" instance in a request
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers['Authorization'] = `Bearer ${state.token}`
+      return config
+    },
+    (error) => {
+      return Promise.reject(error)
+    }
+  )
+
+  // Attach an interceptor that will be executed once we get the response from the "authFetch" request. The first block is executed if the response codes are in 200 range. The last block is executed if the response code are in 400 range
+  // This is very handy because we can logout user if we have 401 (Unauthorized) error in a response
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response
+    },
+    (error) => {
+      console.log(error.response)
+      if (error.response.status === 401) {
+        console.log("AUTH ERROR")
+      }
+      return Promise.reject(error)
+    }
+  )
 
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT })
@@ -127,7 +150,7 @@ const AppProvider = ({ children }) => {
 
       console.log(data)
     } catch (error) {
-      console.log(error.response)
+      // console.log(error.response)
     }
   }
 
