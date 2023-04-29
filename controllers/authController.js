@@ -49,6 +49,7 @@ const login = async (req, res) => {
     throw new UnAuthenticatedError("Invalid Credentials")
   }
 
+  // Generate a new token each time a user logs in 
   const token = user.createJWT()
 
   // Setting the password to "undefined" for a security purpose
