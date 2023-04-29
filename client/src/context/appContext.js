@@ -12,6 +12,9 @@ import {
   LOGIN_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from "./actions";
 
 // Fetch data from the local storage on initial load
@@ -145,13 +148,20 @@ const AppProvider = ({ children }) => {
   }
 
   const updateUser = async (currentUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN })
+
     try {
       const { data } = await authFetch.patch('/auth/updateUser', currentUser)
 
-      console.log(data)
+      const { user, location, token } = data
+
+      dispatch({ type: UPDATE_USER_SUCCESS, payload: { user, location, token } })
+      addUserToLocalStorage({ user, location, token })
     } catch (error) {
-      // console.log(error.response)
+      dispatch({ type: UPDATE_USER_ERROR, payload: { msg: error.response.data.msg } })
     }
+
+    clearAlert()
   }
 
   return (
