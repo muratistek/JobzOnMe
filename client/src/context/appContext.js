@@ -65,7 +65,7 @@ const AppProvider = ({ children }) => {
     (error) => {
       console.log(error.response)
       if (error.response.status === 401) {
-        console.log("AUTH ERROR")
+        logoutUser()
       }
       return Promise.reject(error)
     }
@@ -99,7 +99,6 @@ const AppProvider = ({ children }) => {
     dispatch({ type: REGISTER_USER_BEGIN })
     try {
       const response = await axios.post('/api/v1/auth/register', currentUser)
-      // console.log(response);
       const { user, token, location } = response.data
       dispatch({
         type: REGISTER_USER_SUCCESS,
@@ -109,7 +108,6 @@ const AppProvider = ({ children }) => {
       addUserToLocalStorage({ user, token, location })
     }
     catch (error) {
-      // console.log(error.response)
       dispatch({
         type: REGISTER_USER_ERROR,
         payload: { msg: error.response.data.msg }
@@ -158,7 +156,10 @@ const AppProvider = ({ children }) => {
       dispatch({ type: UPDATE_USER_SUCCESS, payload: { user, location, token } })
       addUserToLocalStorage({ user, location, token })
     } catch (error) {
-      dispatch({ type: UPDATE_USER_ERROR, payload: { msg: error.response.data.msg } })
+      // Since we are logging a user out if we have the 401 error, we don't need to show an error message (since the delay we have a user may see the error in the login page)
+      if (error.response.status !== 401) {
+        dispatch({ type: UPDATE_USER_ERROR, payload: { msg: error.response.data.msg } })
+      }
     }
 
     clearAlert()

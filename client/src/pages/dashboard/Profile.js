@@ -15,11 +15,11 @@ export default function Profile() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    // remove this when testing server-side error handling
-    // if (!name || !email || !lastName || !location) {
-    //   displayAlert()
-    //   return
-    // }
+    // If you need to test the server-side error handling, comment out the below code
+    if (!name || !email || !lastName || !location) {
+      displayAlert()
+      return
+    }
 
     updateUser({ name, email, lastName, location })
   }
