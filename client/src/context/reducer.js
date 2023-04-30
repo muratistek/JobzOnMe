@@ -174,6 +174,7 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     }
   }
+  // Adding "showAlert" prop to ensure that after we do some action and quickly go to a different component, the previous alert of that component would be removed
   if (action.type === GET_JOBS_BEGIN) {
     return {
       ...state,

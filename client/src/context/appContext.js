@@ -229,6 +229,9 @@ const AppProvider = ({ children }) => {
 
     } catch (error) {
       console.log(error.response)
+
+      // Logout a user if we get any type of error because using this route, we shouldn't get any server errors at all. If there is an error, then there is something wrong with the app and we should logout
+      // logoutUser()
     }
 
     clearAlert()
