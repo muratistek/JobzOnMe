@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormRow, Alert } from '../../components'
+import { FormRow, FormRowSelect, Alert } from '../../components'
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 
@@ -64,21 +64,24 @@ export default function AddJob() {
             value={jobLocation}
             handleChange={handleJobInput}
           />
-          {/* job type */}
-          <div className="form-row">
-            <label htmlFor="jobType" className='form-label'>
-              job type
-            </label>
-            <select name="jobType" value={jobType} onChange={handleJobInput} className='form-select'>
-              {jobTypeOptions.map((itemValue, index) => {
-                return (
-                  <option key={index} value={itemValue}>{itemValue}</option>
-                )
-              })}
-            </select>
-          </div>
-
           {/* job status */}
+          <FormRowSelect
+            name="status"
+            value={status}
+            handleChange={handleJobInput}
+            list={statusOptions}
+          />
+
+          {/* job type */}
+          <FormRowSelect
+            name="jobType"
+            labelText="Job Type"
+            value={jobType}
+            handleChange={handleJobInput}
+            list={jobTypeOptions}
+          />
+
+          {/* button container */}
           <div className="btn-container">
             <button type='submit' className='btn btn-block submit-btn' onClick={handleSubmit}>submit</button>
           </div>
