@@ -1,7 +1,11 @@
 import React from 'react'
+import Wrapper from '../assets/wrappers/JobInfo'
 
-export default function JobInfo() {
+export default function JobInfo({ icon, text }) {
   return (
-    <h2>Job Info</h2>
+    <Wrapper>
+      <span className='icon'>{icon}</span>
+      <span className='text'>{text}</span>
+    </Wrapper>
   )
 }
