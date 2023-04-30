@@ -14,7 +14,7 @@ export default function BigSidebar() {
       <div className={showSidebar ? 'sidebar-container' : 'sidebar-container show-sidebar'}>
         <div className="content">
           <header>
-            <Logo />
+            <Logo styleLogo={{ width: "164px", height: "50px" }} />
           </header>
           <NavLinks />
         </div>
