@@ -45,6 +45,10 @@ const initialState = {
   statusOptions: ['interview', 'declined', 'pending'],
   status: 'pending',
   showSidebar: false,
+  jobs: [],
+  totalJobs: 0,
+  numOfPages: 1,
+  page: 1
 }
 
 const AppContext = React.createContext()
