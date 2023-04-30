@@ -17,6 +17,9 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR
 } from "./actions";
 
 // Fetch data from the local storage on initial load
@@ -73,7 +76,6 @@ const AppProvider = ({ children }) => {
       return response
     },
     (error) => {
-      console.log(error.response)
       if (error.response.status === 401) {
         logoutUser()
       }
@@ -183,6 +185,31 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_VALUES })
   }
 
+  const createJob = async () => {
+    dispatch({ type: CREATE_JOB_BEGIN })
+
+    try {
+      const { position, company, jobLocation, jobType, status } = state
+
+      await authFetch.post('/jobs', {
+        position, company, jobLocation, jobType, status
+      })
+
+      dispatch({ type: CREATE_JOB_SUCCESS })
+      // Clear form values after submit
+      dispatch({ type: CLEAR_VALUES })
+    } catch (error) {
+      if (error.response.status === 401) return
+
+      dispatch({
+        type: CREATE_JOB_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+
+    clearAlert()
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -194,7 +221,8 @@ const AppProvider = ({ children }) => {
         logoutUser,
         updateUser,
         handleChange,
-        clearValues
+        clearValues,
+        createJob
       }}>
       {children}
     </AppContext.Provider>
