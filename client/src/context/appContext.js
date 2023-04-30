@@ -16,6 +16,7 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
+  CLEAR_VALUES,
 } from "./actions";
 
 // Fetch data from the local storage on initial load
@@ -178,8 +179,23 @@ const AppProvider = ({ children }) => {
     dispatch({ type: HANDLE_CHANGE, payload: { name, value } })
   }
 
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES })
+  }
+
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, toggleSidebar, logoutUser, updateUser, handleChange }}>
+    <AppContext.Provider
+      value={{
+        ...state,
+        displayAlert,
+        registerUser,
+        loginUser,
+        toggleSidebar,
+        logoutUser,
+        updateUser,
+        handleChange,
+        clearValues
+      }}>
       {children}
     </AppContext.Provider>
   )

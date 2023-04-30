@@ -17,7 +17,8 @@ export default function AddJob() {
     jobTypeOptions,
     status,
     statusOptions,
-    handleChange
+    handleChange,
+    clearValues
   } = useAppContext()
 
   const handleSubmit = (e) => {
@@ -85,6 +86,13 @@ export default function AddJob() {
           {/* button container */}
           <div className="btn-container">
             <button type='submit' className='btn btn-block submit-btn' onClick={handleSubmit}>submit</button>
+
+            <button type='submit' className='btn btn-block clear-btn' onClick={
+              (e) => {
+                e.preventDefault()
+                clearValues()
+              }
+            }>clear</button>
           </div>
         </div>
       </form>
