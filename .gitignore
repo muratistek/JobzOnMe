@@ -1,3 +1,5 @@
 node_modules
 .DS_Store
 .env
+mock_data.json
+populate.js
