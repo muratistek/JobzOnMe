@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes"
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from '../errors/index.js'
 import checkPermissions from "../utils/checkPermissions.js"
 import mongoose from "mongoose"
+import moment from 'moment'
 
 const createJob = async (req, res) => {
   const { position, company } = req.body
@@ -94,6 +95,15 @@ const showStats = async (req, res) => {
     { $sort: { '_id.year': -1, '_id.month': -1 } },
     { $limit: 6 }
   ])
+
+  // Refactor the "monthlyApplications" array for the better data output. We reverse the latest 6 month because we will display from oldest to newest. 
+  monthlyApplications = monthlyApplications.map((item) => {
+    const { _id: { year, month }, count } = item
+    // moment package counts month from 0 to 11 (unlike mongoDB that does that from 1 to 12). That's why we have to subtract one 
+    const date = moment().month(month - 1).year(year).format('MMM Y')
+
+    return { date, count }
+  }).reverse()
 
   res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications })
 }
