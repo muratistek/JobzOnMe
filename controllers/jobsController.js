@@ -18,7 +18,22 @@ const createJob = async (req, res) => {
 }
 
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({ createdBy: req.user.userId })
+  // Get query string values
+  const { status, jobType, sort, search } = req.query
+
+  const queryObject = {
+    createdBy: req.user.userId,
+  }
+  // add conditions based on the query strings values
+  if (status !== 'all') {
+    queryObject.status = status
+  }
+
+  // Remove "await" to be able to chain the returned query 
+  let result = Job.find(queryObject)
+
+  // Chain sort conditions
+  const jobs = await result
 
   res.status(StatusCodes.OK).json({ jobs, totalJobs: jobs.length, numOfPages: 1 })
 }
