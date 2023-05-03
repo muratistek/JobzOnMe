@@ -28,7 +28,8 @@ import {
   EDIT_JOB_SUCCESS,
   EDIT_JOB_ERROR,
   SHOW_STATS_BEGIN,
-  SHOW_STATS_SUCCESS
+  SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS
 } from "./actions";
 
 // Fetch data from the local storage on initial load
@@ -309,7 +310,7 @@ const AppProvider = ({ children }) => {
   }
 
   const clearFilters = () => {
-    console.log("clear filters")
+    dispatch({ type: CLEAR_FILTERS })
   }
 
   return (
