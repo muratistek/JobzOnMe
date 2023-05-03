@@ -24,7 +24,7 @@ const getAllJobs = async (req, res) => {
   const queryObject = {
     createdBy: req.user.userId,
   }
-  // add conditions based on the query strings values
+  // add conditions based on the query strings values and limit the number of output
   if (status !== 'all') {
     queryObject.status = status
   }
@@ -38,6 +38,12 @@ const getAllJobs = async (req, res) => {
 
   // Remove "await" to be able to chain the returned query 
   let result = Job.find(queryObject)
+
+  // Sort conditions on the filtered result. Sort by a property name, if "minus" in front, then sort in descending order
+  if (sort === 'latest') result = result.sort('-createdAt')
+  if (sort === 'oldest') result = result.sort('createdAt')
+  if (sort === 'a-z') result = result.sort('position')
+  if (sort === 'z-a') result = result.sort('-position')
 
   // Chain sort conditions
   const jobs = await result
