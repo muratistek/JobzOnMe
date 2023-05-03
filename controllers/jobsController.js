@@ -31,6 +31,10 @@ const getAllJobs = async (req, res) => {
   if (jobType !== 'all') {
     queryObject.jobType = jobType
   }
+  if (search) {
+    // Allow search positions based on a search query string value. Allow case insensitive
+    queryObject.position = { $regex: search, $options: 'i' }
+  }
 
   // Remove "await" to be able to chain the returned query 
   let result = Job.find(queryObject)
