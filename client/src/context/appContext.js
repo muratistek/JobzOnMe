@@ -232,7 +232,14 @@ const AppProvider = ({ children }) => {
   }
 
   const getJobs = async () => {
-    let url = `/jobs`
+    const { search, searchStatus, searchType, sort } = state
+
+    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`
+
+    // Add search query param if a user typed at least one char
+    if (search) {
+      url = url + `&search=${search}`
+    }
 
     dispatch({ type: GET_JOBS_BEGIN })
 
