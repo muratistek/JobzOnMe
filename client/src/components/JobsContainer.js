@@ -11,6 +11,8 @@ export default function JobsContainer() {
 
   useEffect(() => {
     getJobs()
+    // You can also use the useCallback() hook
+    // eslint-disable-next-line
   }, [search, searchStatus, searchType, sort, page])
 
   if (isLoading) {

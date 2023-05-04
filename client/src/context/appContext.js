@@ -251,10 +251,9 @@ const AppProvider = ({ children }) => {
       dispatch({ type: GET_JOBS_SUCCESS, payload: { jobs, totalJobs, numOfPages } })
 
     } catch (error) {
-      console.log(error.response)
-
       // Logout a user if we get any type of error because using this route, we shouldn't get any server errors at all. If there is an error, then there is something wrong with the app and we should logout
-      // logoutUser()
+
+      logoutUser()
     }
 
     clearAlert()
@@ -293,8 +292,7 @@ const AppProvider = ({ children }) => {
       // Fetch the updated list of jobs after deletion
       getJobs()
     } catch (error) {
-      console.log(error.response)
-      // logoutUser()
+      logoutUser()
     }
   }
 
@@ -310,8 +308,7 @@ const AppProvider = ({ children }) => {
         }
       })
     } catch (error) {
-      console.log(error.response)
-      // logoutUser()
+      logoutUser()
     }
 
     clearAlert()

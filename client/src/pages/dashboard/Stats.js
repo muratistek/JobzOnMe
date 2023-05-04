@@ -7,6 +7,8 @@ export default function Stats() {
 
   useEffect(() => {
     showStats()
+    // You can also use the useCallback() hook
+    // eslint-disable-next-line
   }, [])
 
   if (isLoading) {
