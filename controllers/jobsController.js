@@ -45,6 +45,14 @@ const getAllJobs = async (req, res) => {
   if (sort === 'a-z') result = result.sort('position')
   if (sort === 'z-a') result = result.sort('-position')
 
+  const page = Number(req.query.page) || 1
+  const limit = Number(req.query.limit) || 10
+  // It will take every 10 results for each page
+  const skip = (page - 1) * limit
+
+  // This chaining with skip() and limit() is essential for the pagination functionality to work
+  result = result.skip(skip).limit(limit)
+
   // Chain sort conditions
   const jobs = await result
 
