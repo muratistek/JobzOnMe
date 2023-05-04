@@ -143,7 +143,9 @@ const reducer = (state, action) => {
   if (action.type === HANDLE_CHANGE) {
     return {
       ...state,
-      [action.payload.name]: action.payload.value
+      [action.payload.name]: action.payload.value,
+      // Set a page to 1 every time we make a change in the search form
+      page: 1
     }
   }
   if (action.type === CLEAR_VALUES) {
