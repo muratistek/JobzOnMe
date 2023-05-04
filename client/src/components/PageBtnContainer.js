@@ -8,11 +8,19 @@ export default function PageBtnContainer() {
   const pages = Array.from({ length: numOfPages }, (_, index) => index + 1)
 
   const prevPage = () => {
-    console.log("Previous page")
+    let newPage = page - 1
+
+    if (newPage < 1) newPage = numOfPages
+
+    changePage(newPage)
   }
 
   const nextPage = () => {
-    console.log("Next Page")
+    let newPage = page + 1
+
+    if (newPage > numOfPages) newPage = 1
+
+    changePage(newPage)
   }
 
   return (
