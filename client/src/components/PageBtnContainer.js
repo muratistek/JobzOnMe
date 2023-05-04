@@ -3,7 +3,7 @@ import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi'
 import Wrapper from "../assets/wrappers/PageBtnContainer"
 
 export default function PageBtnContainer() {
-  const { numOfPages, page } = useAppContext()
+  const { numOfPages, page, changePage } = useAppContext()
 
   const pages = Array.from({ length: numOfPages }, (_, index) => index + 1)
 
@@ -27,7 +27,7 @@ export default function PageBtnContainer() {
             key={pageNum}
             type="button"
             className={pageNum === page ? 'pageBtn active' : 'pageBtn'}
-            onClick={() => console.log("change page num")}
+            onClick={() => changePage(pageNum)}
           >
             {pageNum}
           </button>))}
