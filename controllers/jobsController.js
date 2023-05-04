@@ -56,7 +56,11 @@ const getAllJobs = async (req, res) => {
   // Chain sort conditions
   const jobs = await result
 
-  res.status(StatusCodes.OK).json({ jobs, totalJobs: jobs.length, numOfPages: 1 })
+  // Get a number of documents in DB based on the passed query object
+  const totalJobs = await Job.countDocuments(queryObject)
+  const numOfPages = Math.ceil(totalJobs / limit)
+
+  res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages })
 }
 
 const updateJob = async (req, res) => {
