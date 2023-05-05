@@ -12,6 +12,11 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
+// Import server security packages
+import helmet from 'helmet'
+import xss from 'xss-clean'
+import mongoSanitize from 'express-mongo-sanitize'
+
 // Database
 import connectDB from './db/connect.js'
 
@@ -30,6 +35,15 @@ if (process.env.NODE_ENV != "production") {
 }
 
 app.use(express.json())
+
+// Add server security middleware 
+
+// Secures the express server by setting various HTTP headers
+app.use(helmet())
+// Sanitizes user input coming from POST body, GET queries, and url params
+app.use(xss())
+// Sanitizes user-supplied data to prevent MongoDB Operator Injection
+app.use(mongoSanitize())
 
 // Because we are using ES6 modules, we need to get a proper path with "meta.url"
 const __dirname = dirname(fileURLToPath(import.meta.url))
