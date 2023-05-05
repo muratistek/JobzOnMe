@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { FormRow, FormRowSelect } from '.'
 import { useAppContext } from '../context/appContext'
 import Wrapper from '../assets/wrappers/SearchContainer'
@@ -6,8 +6,9 @@ import Wrapper from '../assets/wrappers/SearchContainer'
 export default function SearchContainer() {
   const { isLoading, search, searchStatus, searchType, sort, sortOptions, handleChange, clearFilters, jobTypeOptions, statusOptions } = useAppContext()
 
+  const [localSearchValue, setLocalSearchValue] = useState('')
+
   const handleSearch = (e) => {
-    if (isLoading) return
     handleChange({ name: e.target.name, value: e.target.value })
   }
 
@@ -16,13 +17,17 @@ export default function SearchContainer() {
     clearFilters()
   }
 
+  // const debounce = () => {
+
+  // }
+
   return (
     <Wrapper>
       <form className='form'>
         <h4>Search Form</h4>
         <div className='form-center'>
           {/* Search by position */}
-          <FormRow type='text' name='search' value={search} handleChange={handleSearch} />
+          <FormRow type='text' name='search' value={localSearchValue} handleChange={(e) => setLocalSearchValue(e.target.value)} />
           {/* Search by status */}
           <FormRowSelect
             labelText="status"
