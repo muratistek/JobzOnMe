@@ -14,14 +14,21 @@ export default function SearchContainer() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setLocalSearchValue('')
     clearFilters()
   }
 
-  // Set debounce callback to implement new search functionality
+  // Set debounce callback to implement new search functionality. 
+  // Here we are using JS Debounce functionality where we trigger a function (in our case "handleChange()") only once per use case. This way we won't make unneeded requests. Only once 1 second passed from the last keystroke, we will make an API request to the server
+  // NOTE: We cannot use "localSearchValue" as a "value" property because initially it will be an empty string and stay like that (since we are using useMemo()). We only use it for a two-way binding
   const debounce = () => {
-    console.log('debounce')
+    let timeoutID;
     return (e) => {
       setLocalSearchValue(e.target.value)
+      clearTimeout(timeoutID)
+      timeoutID = setTimeout(() => {
+        handleChange({ name: e.target.name, value: e.target.value })
+      }, 1000)
     }
   }
 
