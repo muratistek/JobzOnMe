@@ -17,9 +17,16 @@ export default function SearchContainer() {
     clearFilters()
   }
 
-  // const debounce = () => {
+  // Set debounce callback to implement new search functionality
+  const debounce = () => {
+    console.log('debounce')
+    return (e) => {
+      setLocalSearchValue(e.target.value)
+    }
+  }
 
-  // }
+  // We need to use "useMemo" to run the debounce() once only to get the callback function from the debounce() one time (when the application loads, not on every render)
+  const debounceHelper = useMemo(() => debounce(), [])
 
   return (
     <Wrapper>
@@ -27,7 +34,7 @@ export default function SearchContainer() {
         <h4>Search Form</h4>
         <div className='form-center'>
           {/* Search by position */}
-          <FormRow type='text' name='search' value={localSearchValue} handleChange={(e) => setLocalSearchValue(e.target.value)} />
+          <FormRow type='text' name='search' value={localSearchValue} handleChange={debounceHelper} />
           {/* Search by status */}
           <FormRowSelect
             labelText="status"
