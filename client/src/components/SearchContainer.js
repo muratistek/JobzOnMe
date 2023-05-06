@@ -4,7 +4,7 @@ import { useAppContext } from '../context/appContext'
 import Wrapper from '../assets/wrappers/SearchContainer'
 
 export default function SearchContainer() {
-  const { isLoading, search, searchStatus, searchType, sort, sortOptions, handleChange, clearFilters, jobTypeOptions, statusOptions } = useAppContext()
+  const { isLoading, searchStatus, searchType, sort, sortOptions, handleChange, clearFilters, jobTypeOptions, statusOptions } = useAppContext()
 
   const [localSearchValue, setLocalSearchValue] = useState('')
 
@@ -33,6 +33,7 @@ export default function SearchContainer() {
   }
 
   // We need to use "useMemo" to run the debounce() once only to get the callback function from the debounce() one time (when the application loads, not on every render)
+  // eslint-disable-next-line
   const debounceHelper = useMemo(() => debounce(), [])
 
   return (
