@@ -11,12 +11,13 @@ const apiLimiter = rateLimiter({
 
 import { register, login, updateUser } from "../controllers/authController.js";
 import authenticateUser from '../middleware/auth.js'
+import testUser from '../middleware/testUser.js'
 
 // Routes
 router.route('/register').post(apiLimiter, register)
 router.route('/login').post(apiLimiter, login)
 
 // Since "register and login" are public routes we shouldn't check if the user is authenticated. But only auth users can update their profile
-router.route('/updateUser').patch(authenticateUser, updateUser)
+router.route('/updateUser').patch(authenticateUser, testUser, updateUser)
 
 export default router

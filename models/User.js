@@ -52,7 +52,7 @@ UserSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, salt)
 })
 
-// Generate a token
+// Generate a token and attach userID, so when we call "jwt.verify" in the "auth" middleware, we can get the value back in the "payload" variable
 UserSchema.methods.createJWT = function () {
   return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LIFETIME })
 }
