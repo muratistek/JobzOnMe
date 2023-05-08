@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken'
 import { UnAuthenticatedError } from '../errors/index.js'
 
 const auth = async (req, res, next) => {
+  console.log(req.cookies)
+
   // Access the Authorization header value of JWT token with Bearer schema
   const authHeader = req.headers.authorization
 
