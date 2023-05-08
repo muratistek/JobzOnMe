@@ -55,6 +55,16 @@ const login = async (req, res) => {
   // Setting the password to "undefined" for a security purpose
   user.password = undefined
 
+  // Setup auth cookie
+  res.cookie('token', token, {
+    // Ensures that ONLY a browser can access a cookie (very important)
+    httpOnly: true,
+    // Set expiration to one day
+    expires: new Date(Date.now() + (1000 * 60 * 60 * 24)),
+    // Only send the cookie if we are using the HTTPS protocol
+    secure: process.env.NODE_ENV === 'production'
+  })
+
   res.status(StatusCodes.OK).json({ user, token, location: user.location })
 }
 const updateUser = async (req, res) => {
