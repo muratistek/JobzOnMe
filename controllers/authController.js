@@ -1,5 +1,6 @@
 import User from "../models/User.js"
 import { StatusCodes } from "http-status-codes"
+import attachCookie from "../utils/attachCookie.js"
 
 // Custom Errors
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from '../errors/index.js'
@@ -20,6 +21,10 @@ const register = async (req, res) => {
 
   const user = await User.create({ name, email, password })
   const token = user.createJWT()
+
+  // Setup auth cookie
+  attachCookie({ res, token })
+
   res.status(StatusCodes.CREATED).json({
     user: {
       name: user.name,
@@ -56,14 +61,7 @@ const login = async (req, res) => {
   user.password = undefined
 
   // Setup auth cookie
-  res.cookie('token', token, {
-    // Ensures that ONLY a browser can access a cookie (very important)
-    httpOnly: true,
-    // Set expiration to one day
-    expires: new Date(Date.now() + (1000 * 60 * 60 * 24)),
-    // Only send the cookie if we are using the HTTPS protocol
-    secure: process.env.NODE_ENV === 'production'
-  })
+  attachCookie({ res, token })
 
   res.status(StatusCodes.OK).json({ user, token, location: user.location })
 }
@@ -85,6 +83,9 @@ const updateUser = async (req, res) => {
 
   // Generate a new JWT token after the user was updated. This way we regenerate the expiration date and improve security
   const token = user.createJWT()
+
+  // Setup auth cookie
+  attachCookie({ res, token })
 
   res.status(StatusCodes.OK).json({ user, token, location: user.location })
 }
