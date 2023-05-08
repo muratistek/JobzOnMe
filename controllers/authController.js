@@ -32,7 +32,6 @@ const register = async (req, res) => {
       lastName: user.lastName,
       location: user.location
     },
-    token,
     location: user.location
   })
 }
@@ -63,7 +62,7 @@ const login = async (req, res) => {
   // Setup auth cookie
   attachCookie({ res, token })
 
-  res.status(StatusCodes.OK).json({ user, token, location: user.location })
+  res.status(StatusCodes.OK).json({ user, location: user.location })
 }
 const updateUser = async (req, res) => {
   const { email, name, lastName, location } = req.body
@@ -87,7 +86,7 @@ const updateUser = async (req, res) => {
   // Setup auth cookie
   attachCookie({ res, token })
 
-  res.status(StatusCodes.OK).json({ user, token, location: user.location })
+  res.status(StatusCodes.OK).json({ user, location: user.location })
 }
 
 export { register, login, updateUser }
