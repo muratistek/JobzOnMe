@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import reducer from "./reducer";
 import axios from 'axios'
 import {
@@ -31,10 +31,17 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
-  CHANGE_PAGE
+  CHANGE_PAGE,
+  GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_SUCCESS
 } from "./actions";
 
 const initialState = {
+  // "userLoading" is used only when we fetch a current user. 
+  // This state will help to prevent from redirecting to the landing page because of the protected route.
+  // It should also be set to "true" default value since there won't be time to change it from "false" and prevent the protected route to be executed and redirect us to the landing page
+  // This allows to prevent using the local storage and thus, improve the security of application
+  userLoading: true,
   isLoading: false,
   showAlert: false,
   alertText: "",
@@ -293,6 +300,25 @@ const AppProvider = ({ children }) => {
   const changePage = (page) => {
     dispatch({ type: CHANGE_PAGE, payload: { page } })
   }
+
+  const getCurrentUser = async () => {
+    dispatch({ type: GET_CURRENT_USER_BEGIN })
+
+    try {
+      const { data } = await authFetch('/auth/getCurrentUser')
+      const { user, location } = data
+      dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user, location } })
+    } catch (error) {
+      if (error.response.status === 401) return
+      logoutUser()
+    }
+  }
+
+  // The "effect" function below will be executed each time we refresh a page. 
+  // This is done to get the "current user" using a cookie (instead of a local storage) and prevent from logging out with each page refresh
+  useEffect(() => {
+    getCurrentUser()
+  }, [])
 
   return (
     <AppContext.Provider
