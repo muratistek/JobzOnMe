@@ -5,7 +5,6 @@ import { AddJob, AllJobs, Profile, Stats, SharedLayout } from './pages/dashboard
 function App() {
   return (
     <BrowserRouter>
-
       <Routes>
         <Route
           path='/'
