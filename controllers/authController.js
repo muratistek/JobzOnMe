@@ -35,6 +35,8 @@ const register = async (req, res) => {
     location: user.location
   })
 }
+
+
 const login = async (req, res) => {
   const { email, password } = req.body
 
@@ -64,6 +66,16 @@ const login = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ user, location: user.location })
 }
+
+const logout = async (req, res) => {
+  res.cookie('token', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now())
+  })
+
+  res.status(StatusCodes.OK).json({ msg: "User Logged Out!" })
+}
+
 const updateUser = async (req, res) => {
   const { email, name, lastName, location } = req.body
 
@@ -94,4 +106,4 @@ const getCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, location: user.location })
 }
 
-export { register, login, updateUser, getCurrentUser }
+export { register, login, logout, updateUser, getCurrentUser }
