@@ -1,5 +1,6 @@
 import User from "../models/User.js"
 import { StatusCodes } from "http-status-codes"
+import attachCookie from "../utils/attachCookie.js"
 
 // Custom Errors
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from '../errors/index.js'
@@ -20,6 +21,10 @@ const register = async (req, res) => {
 
   const user = await User.create({ name, email, password })
   const token = user.createJWT()
+
+  // Setup auth cookie
+  attachCookie({ res, token })
+
   res.status(StatusCodes.CREATED).json({
     user: {
       name: user.name,
@@ -27,10 +32,11 @@ const register = async (req, res) => {
       lastName: user.lastName,
       location: user.location
     },
-    token,
     location: user.location
   })
 }
+
+
 const login = async (req, res) => {
   const { email, password } = req.body
 
@@ -55,8 +61,21 @@ const login = async (req, res) => {
   // Setting the password to "undefined" for a security purpose
   user.password = undefined
 
-  res.status(StatusCodes.OK).json({ user, token, location: user.location })
+  // Setup auth cookie
+  attachCookie({ res, token })
+
+  res.status(StatusCodes.OK).json({ user, location: user.location })
 }
+
+const logout = async (req, res) => {
+  res.cookie('token', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now())
+  })
+
+  res.status(StatusCodes.OK).json({ msg: "User Logged Out!" })
+}
+
 const updateUser = async (req, res) => {
   const { email, name, lastName, location } = req.body
 
@@ -76,7 +95,15 @@ const updateUser = async (req, res) => {
   // Generate a new JWT token after the user was updated. This way we regenerate the expiration date and improve security
   const token = user.createJWT()
 
-  res.status(StatusCodes.OK).json({ user, token, location: user.location })
+  // Setup auth cookie
+  attachCookie({ res, token })
+
+  res.status(StatusCodes.OK).json({ user, location: user.location })
 }
 
-export { register, login, updateUser }
+const getCurrentUser = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId })
+  res.status(StatusCodes.OK).json({ user, location: user.location })
+}
+
+export { register, login, logout, updateUser, getCurrentUser }

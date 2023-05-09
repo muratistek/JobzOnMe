@@ -20,7 +20,7 @@ import mongoSanitize from 'express-mongo-sanitize'
 // Database
 import connectDB from './db/connect.js'
 
-// Middleware
+// Custom Middleware
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
 import authenticateUser from './middleware/auth.js'
@@ -29,12 +29,18 @@ import authenticateUser from './middleware/auth.js'
 import authRouter from './routes/authRoutes.js'
 import jobsRouter from './routes/jobsRoutes.js'
 
+// Cookie Auth
+import cookieParser from 'cookie-parser'
+
 // Don't use the package if we are in the production environment
 if (process.env.NODE_ENV != "production") {
   app.use(morgan('dev'))
 }
 
 app.use(express.json())
+
+// Attach cookie parser for the Auth Cookie functionality
+app.use(cookieParser())
 
 // Add server security middleware 
 
@@ -44,6 +50,7 @@ app.use(helmet())
 app.use(xss())
 // Sanitizes user-supplied data to prevent MongoDB Operator Injection
 app.use(mongoSanitize())
+
 
 // Because we are using ES6 modules, we need to get a proper path with "meta.url"
 const __dirname = dirname(fileURLToPath(import.meta.url))

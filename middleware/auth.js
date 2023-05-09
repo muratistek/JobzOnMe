@@ -2,14 +2,12 @@ import jwt from 'jsonwebtoken'
 import { UnAuthenticatedError } from '../errors/index.js'
 
 const auth = async (req, res, next) => {
-  // Access the Authorization header value of JWT token with Bearer schema
-  const authHeader = req.headers.authorization
+  // Grab token from the request cookies object that browser provides with each user request
+  const token = req.cookies.token;
 
-  if (!authHeader || !authHeader.startsWith('Bearer')) {
+  if (!token) {
     throw new UnAuthenticatedError('Authentication Invalid')
   }
-
-  const token = authHeader.split(' ')[1]
 
   try {
     // We receive the payload from the first argument of the jwt.sign() in the "createJWT" method of User Model
