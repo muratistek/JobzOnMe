@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Logo, FormRow, Alert } from '../components'
 import Wrapper from '../assets/wrappers/RegisterPage'
-import { useAppContext } from '../context/appContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { registerUserThunk, loginUserThunk } from '../redux/slices/user/userThunk'
+import { displayAlertThunk } from '../redux/slices/alert/alertThunk'
 import { useNavigate } from 'react-router-dom'
 
 const initialState = {
@@ -12,10 +14,13 @@ const initialState = {
 }
 
 const Register = () => {
+  const dispatch = useDispatch()
   const [values, setValues] = useState(initialState)
   // global state and useNavigate
   const navigate = useNavigate()
-  const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } = useAppContext()
+
+  const { user } = useSelector(state => state.user)
+  const { isLoading, showAlert } = useSelector(state => state.alert)
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember })
@@ -29,17 +34,19 @@ const Register = () => {
     e.preventDefault()
     const { name, email, password, isMember } = values
     if (!email || !password || (!isMember && !name)) {
-      displayAlert()
+      displayAlertThunk(dispatch);
       return
     }
     const currentUser = { name, email, password }
     if (isMember) {
       // "name" property here will be an empty string. It won't affect the functionality
-      loginUser(currentUser)
+      loginUserThunk(dispatch, currentUser)
     }
     else {
-      registerUser(currentUser)
+      registerUserThunk(dispatch, currentUser)
     }
+
+    setValues(initialState)
   }
 
   useEffect(() => {
@@ -83,7 +90,7 @@ const Register = () => {
           labelText="Password"
         />
         <button type='submit' className='btn btn-block' disabled={isLoading}>Submit</button>
-        <button type='button' className='btn btn-block btn-hipster' disabled={isLoading} onClick={() => loginUser({ email: 'test@mail.com', password: 'secretTestUser' })}>
+        <button type='button' className='btn btn-block btn-hipster' disabled={isLoading} onClick={() => loginUserThunk(dispatch, { email: 'test@mail.com', password: 'secretTestUser' })}>
           {isLoading ? 'loading...' : 'Demo App'}
         </button>
         <p>

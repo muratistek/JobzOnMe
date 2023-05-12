@@ -1,12 +1,12 @@
 import React from 'react'
 import Wrapper from '../assets/wrappers/BigSidebar'
-import { useAppContext } from '../context/appContext'
+import { useSelector } from 'react-redux'
 import Logo from './Logo'
 import NavLinks from './NavLinks'
 
 export default function BigSidebar() {
   // Potentially we can use "toggleSidebar" if we want the big sidebar to be closed once a user clicks any nav link
-  const { showSidebar } = useAppContext()
+  const { showSidebar } = useSelector(state => state.job);
 
   return (
     <Wrapper>

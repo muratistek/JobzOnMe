@@ -3,10 +3,10 @@ import main from '../assets/images/main.png'
 import Wrapper from '../assets/wrappers/LandingPage'
 import { Logo } from '../components'
 import { Link, Navigate } from 'react-router-dom'
-import { useAppContext } from '../context/appContext'
+import { useSelector } from 'react-redux'
 
 const Landing = () => {
-  const { user } = useAppContext()
+  const { user } = useSelector(state => state.user)
 
   return (
     <React.Fragment>

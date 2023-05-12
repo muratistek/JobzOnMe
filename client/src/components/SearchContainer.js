@@ -1,21 +1,26 @@
 import React, { useState, useMemo } from 'react'
 import { FormRow, FormRowSelect } from '.'
-import { useAppContext } from '../context/appContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { clearFiltersThunk, handleChangeThunk } from '../redux/slices/job/jobThunk'
 import Wrapper from '../assets/wrappers/SearchContainer'
 
 export default function SearchContainer() {
-  const { isLoading, searchStatus, searchType, sort, sortOptions, handleChange, clearFilters, jobTypeOptions, statusOptions } = useAppContext()
+  const dispatch = useDispatch()
+
+  const { searchStatus, searchType, sort, sortOptions, jobTypeOptions, statusOptions } = useSelector(state => state.job)
 
   const [localSearchValue, setLocalSearchValue] = useState('')
 
+  const { isLoading } = useSelector(state => state.alert)
+
   const handleSearch = (e) => {
-    handleChange({ name: e.target.name, value: e.target.value })
+    handleChangeThunk(dispatch, { name: e.target.name, value: e.target.value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setLocalSearchValue('')
-    clearFilters()
+    clearFiltersThunk(dispatch)
   }
 
   // Set debounce callback to implement new search functionality. 
@@ -27,7 +32,7 @@ export default function SearchContainer() {
       setLocalSearchValue(e.target.value)
       clearTimeout(timeoutID)
       timeoutID = setTimeout(() => {
-        handleChange({ name: e.target.name, value: e.target.value })
+        handleChangeThunk(dispatch, { name: e.target.name, value: e.target.value })
       }, 1000)
     }
   }

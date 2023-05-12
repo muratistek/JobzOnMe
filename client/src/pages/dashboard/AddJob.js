@@ -1,16 +1,18 @@
 import React from 'react'
 import { FormRow, FormRowSelect, Alert } from '../../components'
-import { useAppContext } from '../../context/appContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { displayAlertThunk } from '../../redux/slices/alert/alertThunk'
+import { handleChangeThunk, createJobThunk, editJobThunk } from '../../redux/slices/job/jobThunk'
+import { clearValues } from '../../redux/slices/job/jobSlice'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 
 
 
 export default function AddJob() {
+  const dispatch = useDispatch()
+
   const {
-    isLoading,
     isEditing,
-    showAlert,
-    displayAlert,
     position,
     company,
     jobLocation,
@@ -18,32 +20,33 @@ export default function AddJob() {
     jobTypeOptions,
     status,
     statusOptions,
-    handleChange,
-    clearValues,
-    createJob,
-    editJob
-  } = useAppContext()
+    editJobId
+  } = useSelector(state => state.job)
+
+  const { isLoading, showAlert } = useSelector(state => state.alert)
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     if (!position || !company || !jobLocation) {
-      displayAlert()
+      displayAlertThunk(dispatch)
       return
     }
+
+    const job = { company, position, jobLocation, jobType, status, editJobId }
 
     if (isEditing) {
-      editJob()
+      editJobThunk(dispatch, job)
       return
     }
 
-    createJob()
+    createJobThunk(dispatch, job)
   }
 
   const handleJobInput = (e) => {
     const name = e.target.name
     const value = e.target.value
-    handleChange({ name, value })
+    handleChangeThunk(dispatch, { name, value })
   }
 
   return (
@@ -105,7 +108,7 @@ export default function AddJob() {
             <button type='submit' className='btn btn-block clear-btn' onClick={
               (e) => {
                 e.preventDefault()
-                clearValues()
+                dispatch(clearValues())
               }
             }>clear</button>
           </div>

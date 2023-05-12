@@ -2,7 +2,20 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Register, Landing, Error, ProtectedRoute } from './pages';
 import { AddJob, AllJobs, Profile, Stats, SharedLayout } from './pages/dashboard'
 
+import { useEffect } from 'react';
+import { getCurrentUserThunk } from './redux/slices/user/userThunk';
+import { useDispatch } from 'react-redux';
+
 function App() {
+  const dispatch = useDispatch();
+
+  // The "effect" function below will be executed each time we refresh a page. 
+  // This is done to get the "current user" using a cookie (instead of a local storage) and prevent from logging out with each page refresh
+  useEffect(() => {
+    getCurrentUserThunk(dispatch);
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>
