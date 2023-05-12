@@ -12,6 +12,7 @@ export default function SearchContainer() {
   const [localSearchValue, setLocalSearchValue] = useState('')
 
   const { isLoading } = useSelector(state => state.alert)
+  const { theme } = useSelector(state => state.theme)
 
   const handleSearch = (e) => {
     handleChangeThunk(dispatch, { name: e.target.name, value: e.target.value })
@@ -43,7 +44,7 @@ export default function SearchContainer() {
 
   return (
     <Wrapper>
-      <form className='form'>
+      <form className={`form ${theme === "dark" ? "form-dark" : ""}`}>
         <h4>Search Form</h4>
         <div className='form-center'>
           {/* Search by position */}

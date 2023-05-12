@@ -79,16 +79,38 @@ html {
 }
 
 body {
+  background: #1b1b1b;
+  font-family: var(--bodyFont);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--grey-50);
+}
+
+body[theme='light'] {
   background: var(--backgroundColor);
   font-family: var(--bodyFont);
   font-weight: 400;
   line-height: 1.75;
   color: var(--textColor);
+  transition: background-color 1050ms ease-in-out;
+}
+
+body[theme='dark'] {
+  background: #1b1b1b;
+  font-family: var(--bodyFont);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--grey-50);
+  transition: background-color 1050ms ease-in-out;
 }
 
 p {
   margin-bottom: 1.5rem;
   max-width: 40em;
+}
+
+.darkTheme-text {
+  color: var(--grey-50) !important;
 }
 
 h1,
@@ -237,6 +259,12 @@ ul {
   padding: 2rem 2.5rem;
   margin: 3rem auto;
   transition: var(--transition);
+  transition: background-color 1050ms ease-in-out;
+}
+
+.form-dark {
+  background: #353535 !important;
+  transition: background-color 1050ms ease-in-out;
 }
 
 .form:hover {

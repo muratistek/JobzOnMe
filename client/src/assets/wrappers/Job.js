@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.article`
-  background: var(--white);
+  background: ${props => props.bgColor};
+  transition: background-color 1050ms ease-in-out;
   border-radius: var(--borderRadius);
   display: grid;
   grid-template-rows: 1fr auto;

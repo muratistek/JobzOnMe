@@ -24,6 +24,7 @@ export default function AddJob() {
   } = useSelector(state => state.job)
 
   const { isLoading, showAlert } = useSelector(state => state.alert)
+  const { theme } = useSelector(state => state.theme)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -50,8 +51,8 @@ export default function AddJob() {
   }
 
   return (
-    <Wrapper>
-      <form className='form'>
+    <Wrapper bgColor={theme === "dark" ? "#353535" : "#fff"}>
+      <form className={`form ${theme === "dark" ? "form-dark" : ""}`}>
         <h3>{isEditing ? "edit job" : "add job"}</h3>
         {showAlert && <Alert />}
         <div className="form-center">

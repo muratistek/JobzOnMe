@@ -11,8 +11,10 @@ export default function Navbar() {
   const { user } = useSelector(state => state.user)
   const [showLogout, setShowLogout] = useState(false)
 
+  const { theme } = useSelector(state => state.theme)
+
   return (
-    <Wrapper>
+    <Wrapper bgColor={theme === "dark" ? "#353535" : "#fff"}>
       <div className="nav-center">
         <button className="toggle-btn" onClick={() => toggleSidebarThunk(dispatch)} type="button">
           <FaAlignLeft />

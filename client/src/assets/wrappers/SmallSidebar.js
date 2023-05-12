@@ -20,7 +20,7 @@ const Wrapper = styled.aside`
     opacity: 1;
   }
   .content {
-    background: var(--white);
+    background: ${props => props.bgColor};
     width: var(--fluid-width);
     height: 95vh;
     border-radius: var(--borderRadius);
@@ -48,16 +48,19 @@ const Wrapper = styled.aside`
   .nav-link {
     display: flex;
     align-items: center;
-    color: var(--grey-500);
+    color: ${props => props.textColor};
     padding: 1rem 0;
     text-transform: capitalize;
     transition: var(--transition);
   }
   .nav-link:hover {
-    color: var(--grey-900);
+    color: ${props => props.textColorHover};
   }
   .nav-link:hover .icon {
     color: var(--primary2-500);
+  }
+  .themeButton {
+    padding-top: 50px;
   }
   .icon {
     font-size: 1.5rem;
@@ -67,7 +70,7 @@ const Wrapper = styled.aside`
     transition: var(--transition);
   }
   .active {
-    color: var(--grey-900);
+    color: ${props => props.textColorActive};
   }
   .active .icon {
     color: var(--primary2-500);

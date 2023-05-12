@@ -6,12 +6,13 @@ const Wrapper = styled.aside`
     display: block;
     box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
     .sidebar-container {
-      background: var(--white);
+      background: ${props => props.bgColor};
       min-height: 100vh;
       height: 100%;
       width: 250px;
       margin-left: -250px;
       transition: var(--transition);
+      transition: background-color 1050ms ease-in-out;
     }
     .content {
       position: sticky;
@@ -34,19 +35,26 @@ const Wrapper = styled.aside`
     .nav-link {
       display: flex;
       align-items: center;
-      color: var(--grey-500);
+      color: ${props => props.textColor};
       padding: 1rem 0;
       padding-left: 2.5rem;
       text-transform: capitalize;
       transition: var(--transition);
     }
     .nav-link:hover {
-      background: var(--grey-50);
+      background: ${props => props.bgColorHover};
       padding-left: 3rem;
-      color: var(--grey-900);
+      color: ${props => props.textColorHover};
     }
     .nav-link:hover .icon {
       color: var(--primary2-500);
+    }
+    .themeButton {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+      padding-top: 500px
     }
     .icon {
       font-size: 1.5rem;
@@ -56,7 +64,7 @@ const Wrapper = styled.aside`
       transition: var(--transition);
     }
     .active {
-      color: var(--grey-900);
+      color: ${props => props.textColorActive};
     }
     .active .icon {
       color: var(--primary2-500);

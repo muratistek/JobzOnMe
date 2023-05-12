@@ -13,6 +13,7 @@ const Wrapper = styled.main`
     height: var(--nav-height);
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   .page{
@@ -32,6 +33,8 @@ const Wrapper = styled.main`
   p{
     color: var(--grey-600);
   }
+
+  
 
   .main-img{
     display: none;
