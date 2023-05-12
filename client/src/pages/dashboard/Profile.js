@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import { FormRow, Alert } from '../../components'
-import { useAppContext } from '../../context/appContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateUserThunk } from '../../redux/slices/user/userThunk'
+import { displayAlertThunk } from '../../redux/slices/alert/alertThunk'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 
 
 export default function Profile() {
-  const { user, showAlert, displayAlert, updateUser, isLoading } = useAppContext()
+  const dispatch = useDispatch()
+
+  const { user } = useSelector(state => state.user);
+
+  const { isLoading, showAlert } = useSelector(state => state.alert)
 
   const [name, setName] = useState(user?.name)
   const [email, setEmail] = useState(user?.email)
@@ -17,11 +23,11 @@ export default function Profile() {
 
     // If you need to test the server-side error handling, comment out the below code
     if (!name || !email || !lastName || !location) {
-      displayAlert()
+      displayAlertThunk(dispatch)
       return
     }
 
-    updateUser({ name, email, lastName, location })
+    updateUserThunk(dispatch, { name, email, lastName, location })
   }
 
   return (

@@ -1,11 +1,11 @@
 import React from 'react'
 import StatItem from './StatItem'
-import { useAppContext } from '../context/appContext'
+import { useSelector } from 'react-redux'
 import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from 'react-icons/fa'
 import Wrapper from '../assets/wrappers/StatsContainer'
 
 export default function StatsContainer() {
-  const { stats } = useAppContext()
+  const { stats } = useSelector(state => state.stat)
 
   const defaultStats = [
     {

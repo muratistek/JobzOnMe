@@ -1,17 +1,20 @@
 import { useState } from "react";
 import Wrapper from "../assets/wrappers/Navbar";
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
-import { useAppContext } from "../context/appContext";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUserThunk } from "../redux/slices/user/userThunk";
+import { toggleSidebarThunk } from "../redux/slices/job/jobThunk";
 import Logo from "./Logo";
 
 export default function Navbar() {
-  const { toggleSidebar, logoutUser, user } = useAppContext()
+  const dispatch = useDispatch()
+  const { user } = useSelector(state => state.user)
   const [showLogout, setShowLogout] = useState(false)
 
   return (
     <Wrapper>
       <div className="nav-center">
-        <button className="toggle-btn" onClick={toggleSidebar} type="button">
+        <button className="toggle-btn" onClick={() => toggleSidebarThunk(dispatch)} type="button">
           <FaAlignLeft />
         </button>
         <div>
@@ -25,7 +28,7 @@ export default function Navbar() {
             <FaCaretDown />
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
-            <button type="button" className="dropdown-btn" onClick={logoutUser}>logout</button>
+            <button type="button" className="dropdown-btn" onClick={() => logoutUserThunk(dispatch)}>logout</button>
           </div>
         </div>
       </div>

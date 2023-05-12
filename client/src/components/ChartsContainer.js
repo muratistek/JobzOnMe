@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import BarChart from './BarChart'
 import AreaChart from './AreaChart'
-import { useAppContext } from '../context/appContext'
+import { useSelector } from 'react-redux'
 import Wrapper from '../assets/wrappers/ChartsContainer'
 
 export default function ChartsContainer() {
-  const { monthlyApplications: data } = useAppContext()
+  const { monthlyApplications: data } = useSelector(state => state.stat);
   const [barChart, setBarChart] = useState(true)
   return (
     <Wrapper>

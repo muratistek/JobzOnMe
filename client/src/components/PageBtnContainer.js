@@ -1,9 +1,11 @@
-import { useAppContext } from "../context/appContext"
+import { useSelector, useDispatch } from 'react-redux'
+import { changePageThunk } from '../redux/slices/job/jobThunk'
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi'
 import Wrapper from "../assets/wrappers/PageBtnContainer"
 
 export default function PageBtnContainer() {
-  const { numOfPages, page, changePage } = useAppContext()
+  const dispatch = useDispatch();
+  const { numOfPages, page } = useSelector(state => state.job)
 
   const pages = Array.from({ length: numOfPages }, (_, index) => index + 1)
 
@@ -12,7 +14,7 @@ export default function PageBtnContainer() {
 
     if (newPage < 1) newPage = numOfPages
 
-    changePage(newPage)
+    changePageThunk(dispatch, { page: newPage })
   }
 
   const nextPage = () => {
@@ -20,7 +22,7 @@ export default function PageBtnContainer() {
 
     if (newPage > numOfPages) newPage = 1
 
-    changePage(newPage)
+    changePageThunk(dispatch, { page: newPage })
   }
 
   return (
@@ -35,7 +37,7 @@ export default function PageBtnContainer() {
             key={pageNum}
             type="button"
             className={pageNum === page ? 'pageBtn active' : 'pageBtn'}
-            onClick={() => changePage(pageNum)}
+            onClick={() => changePageThunk(dispatch, { page: pageNum })}
           >
             {pageNum}
           </button>))}

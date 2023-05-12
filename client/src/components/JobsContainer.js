@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { useAppContext } from '../context/appContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { getJobsThunk } from '../redux/slices/job/jobThunk'
 import Loading from './Loading'
 import Job from './Job'
 import Wrapper from '../assets/wrappers/JobsContainer'
@@ -8,10 +9,14 @@ import Alert from './Alert'
 
 
 export default function JobsContainer() {
-  const { getJobs, jobs, isLoading, page, totalJobs, search, searchStatus, sort, searchType, numOfPages, showAlert } = useAppContext()
+  const dispatch = useDispatch()
+
+  const { jobs, page, totalJobs, search, searchStatus, sort, searchType, numOfPages } = useSelector(state => state.job)
+
+  const { isLoading, showAlert } = useSelector(state => state.alert)
 
   useEffect(() => {
-    getJobs()
+    getJobsThunk(dispatch, { search, page, searchStatus, searchType, sort })
     // You can also use the useCallback() hook
     // eslint-disable-next-line
   }, [search, searchStatus, searchType, sort, page])
@@ -33,7 +38,7 @@ export default function JobsContainer() {
       <div className="jobs">
         {jobs.map((job) => {
           return (
-            <Job key={job._id} {...job} />
+            <Job key={job._id} {...job} page={page} sort={sort} search={search} searchStatus={searchStatus} searchType={searchType} />
           )
         })}
       </div>
