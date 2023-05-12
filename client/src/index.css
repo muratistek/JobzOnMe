@@ -26,8 +26,13 @@ html {
   --primary-800: #0a6c74;
   --primary-900: #044e54;
 
+  /* blue colors */
+  --primary2-50: #a0d5f8;
+  --primary2-100: #69bcf4;
+  --primary2-200: #57b4f2;
   --primary2-500: #209CEE;
   --primary2-700: #0074D9;
+
   /* grey */
   --grey-50: #f0f4f8;
   --grey-100: #d9e2ec;
@@ -173,13 +178,13 @@ ul {
 }
 
 .btn-hipster {
-  color: var(--primary-500);
-  background: var(--primary-200);
+  color: var(--grey-50);
+  background: var(--primary2-200);
 }
 
 .btn-hipster:hover {
-  color: var(--primary-200);
-  background: var(--primary-700);
+  color: var(--white);
+  background: var(--primary2-700);
 }
 
 .btn-block {

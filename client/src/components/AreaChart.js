@@ -9,7 +9,7 @@ export default function AreaChartComponent({ data }) {
         <XAxis dataKey='date' />
         <YAxis allowDecimals={false} />
         <Tooltip />
-        <Area dataKey='count' type='monotone' stroke='#2cb1bc' fill='#bef8fd' />
+        <Area dataKey='count' type='monotone' stroke='#209CEE' fill='#69bcf4' />
       </AreaChart>
     </ResponsiveContainer>
   )

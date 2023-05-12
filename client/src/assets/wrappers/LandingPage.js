@@ -35,6 +35,7 @@ const Wrapper = styled.main`
 
   .main-img{
     display: none;
+    margin-left: 80px;
   }
 
   @media (min-width: 992px) {
