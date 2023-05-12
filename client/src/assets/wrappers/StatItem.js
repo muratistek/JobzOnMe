@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 const Wrapper = styled.article`
   padding: 2rem;
-  background: var(--white);
+  background: ${props => props.bgColor};
+  transition: background-color 1050ms ease-in-out;
   border-radius: var(--borderRadius);
   border-bottom: 5px solid ${(props) => props.color};
   header {

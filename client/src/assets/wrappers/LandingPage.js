@@ -13,6 +13,7 @@ const Wrapper = styled.main`
     height: var(--nav-height);
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   .page{
@@ -33,8 +34,11 @@ const Wrapper = styled.main`
     color: var(--grey-600);
   }
 
+  
+
   .main-img{
     display: none;
+    margin-left: 80px;
   }
 
   @media (min-width: 992px) {

@@ -6,6 +6,7 @@ import Wrapper from "../assets/wrappers/PageBtnContainer"
 export default function PageBtnContainer() {
   const dispatch = useDispatch();
   const { numOfPages, page } = useSelector(state => state.job)
+  const { theme } = useSelector(state => state.theme)
 
   const pages = Array.from({ length: numOfPages }, (_, index) => index + 1)
 
@@ -26,7 +27,7 @@ export default function PageBtnContainer() {
   }
 
   return (
-    <Wrapper>
+    <Wrapper bgColor={theme === "dark" ? "#353535" : "#fff"} textColorHover={theme === "dark" ? "#353535" : "#fff"} pageBtnColor={theme === "dark" ? "#57b4f2" : "#a0d5f8"} btnTextColor={theme === 'dark' ? "#0074D9" : "#209CEE"}>
       <button className="prev-btn" onClick={prevPage}>
         <HiChevronDoubleLeft />
         prev

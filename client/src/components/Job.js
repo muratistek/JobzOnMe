@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteJobThunk, setEditJobThunk } from '../redux/slices/job/jobThunk'
 import Wrapper from '../assets/wrappers/Job'
 import JobInfo from './JobInfo'
@@ -10,11 +10,13 @@ import JobInfo from './JobInfo'
 export default function Job({ _id, position, company, jobLocation, jobType, status, createdAt, search, searchStatus, searchType, sort, page }) {
   const dispatch = useDispatch()
 
+  const { theme } = useSelector(state => state.theme)
+
   let date = moment(createdAt)
   date = date.format('MMM Do, YYYY')
 
   return (
-    <Wrapper>
+    <Wrapper bgColor={theme === "dark" ? "#353535" : "#fff"}>
       <header>
         <div className="main-icon">{company.charAt(0)}</div>
         <div className="info">

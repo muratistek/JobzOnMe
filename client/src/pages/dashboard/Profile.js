@@ -12,6 +12,7 @@ export default function Profile() {
   const { user } = useSelector(state => state.user);
 
   const { isLoading, showAlert } = useSelector(state => state.alert)
+  const { theme } = useSelector(state => state.theme)
 
   const [name, setName] = useState(user?.name)
   const [email, setEmail] = useState(user?.email)
@@ -31,8 +32,8 @@ export default function Profile() {
   }
 
   return (
-    <Wrapper>
-      <form className='form' onSubmit={handleSubmit}>
+    <Wrapper bgColor={theme === "dark" ? "#353535" : "#fff"}>
+      <form className={`form ${theme === "dark" ? "form-dark" : ""}`} onSubmit={handleSubmit}>
         <h3>Profile</h3>
         {showAlert && <Alert />}
         <div className="form-center">

@@ -22,6 +22,8 @@ const Register = () => {
   const { user } = useSelector(state => state.user)
   const { isLoading, showAlert } = useSelector(state => state.alert)
 
+  const { theme } = useSelector(state => state.theme)
+
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember })
   }
@@ -59,7 +61,7 @@ const Register = () => {
 
   return (
     <Wrapper className='full-page'>
-      <form className='form' onSubmit={onSubmit}>
+      <form className={`form ${theme === 'dark' ? 'form-dark' : ''}`} onSubmit={onSubmit}>
         <Logo />
         <h3>{values.isMember ? "Login" : "Register"}</h3>
         {showAlert && <Alert />}

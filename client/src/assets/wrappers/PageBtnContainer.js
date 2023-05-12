@@ -9,7 +9,7 @@ const Wrapper = styled.section`
   flex-wrap: wrap;
   gap: 1rem;
   .btn-container {
-    background: var(--primary-100);
+    background: ${props => props.pageBtnColor};
     border-radius: var(--borderRadius);
   }
   .pageBtn {
@@ -19,23 +19,23 @@ const Wrapper = styled.section`
     height: 40px;
     font-weight: 700;
     font-size: 1.25rem;
-    color: var(--primary-500);
+    color: ${props => props.btnTextColor};
     transition: var(--transition);
     border-radius: var(--borderRadius);
     cursor: pointer;
   }
   .active {
-    background: var(--primary-500);
+    background: var(--primary2-500);
     color: var(--white);
   }
   .prev-btn,
   .next-btn {
     width: 100px;
     height: 40px;
-    background: var(--white);
+    background: ${props => props.bgColor};
     border-color: transparent;
     border-radius: var(--borderRadius);
-    color: var(--primary-500);
+    color: var(--primary2-500);
     text-transform: capitalize;
     letter-spacing: var(--letterSpacing);
     display: flex;
@@ -47,8 +47,8 @@ const Wrapper = styled.section`
   }
   .prev-btn:hover,
   .next-btn:hover {
-    background: var(--primary-500);
-    color: var(--white);
+    background: var(--primary2-500);
+    color: ${props => props.textColorHover};
   }
 `
 export default Wrapper
