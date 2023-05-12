@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   stats: {},
   monthlyApplications: [],
-  page: 1
 }
 
 export const statSlice = createSlice({
@@ -14,12 +13,9 @@ export const statSlice = createSlice({
       state.stats = action.payload.stats
       state.monthlyApplications = action.payload.monthlyApplications
     },
-    changePage: (state, action) => {
-      state.page = action.payload.page
-    }
   }
 })
 
-export const { showStats, changePage } = statSlice.actions
+export const { showStats } = statSlice.actions
 
 export default statSlice.reducer

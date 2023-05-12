@@ -1,10 +1,10 @@
-import { getJobsSuccess, setEditJob, toggleSidebar, clearValues, handleChange, clearFilters } from './jobSlice'
+import { getJobsSuccess, setEditJob, toggleSidebar, clearValues, handleChange, clearFilters, changePage } from './jobSlice'
 
 import { displaySuccessAlert, displayErrorAlert, setLoading, clearLoading, clearShowAlert } from "../alert/alertSlice";
 import { clearAlertThunk } from '../alert/alertThunk';
 
 import authFetch from '../../../utils/authFetch';
-// import {logoutUser}
+import { logoutUserThunk } from '../user/userThunk';
 
 
 export const createJobThunk = async (dispatch, job) => {
@@ -53,8 +53,7 @@ export const getJobsThunk = async (dispatch, { search, searchStatus, searchType,
   catch (error) {
     // Logout a user if we get any type of error because using this route, we shouldn't get any server errors at all. If there is an error, then there is something wrong with the app and we should logout
 
-    // TODO: ADD LATER
-    // logoutUser()
+    logoutUserThunk(dispatch)
   }
 
   clearAlertThunk(dispatch)
@@ -112,4 +111,8 @@ export const toggleSidebarThunk = (dispatch) => {
 
 export const clearFiltersThunk = (dispatch) => {
   dispatch(clearFilters());
+}
+
+export const changePageThunk = async (dispatch, { page }) => {
+  dispatch(changePage({ page }))
 }

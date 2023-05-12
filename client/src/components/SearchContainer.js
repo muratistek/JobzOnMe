@@ -33,7 +33,7 @@ export default function SearchContainer() {
       clearTimeout(timeoutID)
       timeoutID = setTimeout(() => {
         handleChangeThunk(dispatch, { name: e.target.name, value: e.target.value })
-      }, 1000)
+      }, 700)
     }
   }
 

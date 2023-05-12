@@ -11,7 +11,7 @@ export const registerUserThunk = async (dispatch, currentUser) => {
     const response = await axios.post('/api/v1/auth/register', currentUser)
     const { user, location } = response.data
     dispatch(updateUser({ user, location }))
-    dispatch(displaySuccessAlert('User Created! Redirecting...'))
+    dispatch(displaySuccessAlert({ msg: 'User Created! Redirecting...' }))
   } catch (error) {
     dispatch(displayErrorAlert({ msg: error.response.data.msg }))
   }
@@ -25,8 +25,8 @@ export const loginUserThunk = async (dispatch, currentUser) => {
   try {
     const { data } = await axios.post('/api/v1/auth/login', currentUser)
     const { user, location } = data
-    dispatch(updateUser({ user, location }))
-    dispatch(displaySuccessAlert('Login Successful! Redirecting...'))
+    dispatch(updateUser({ user, location }));
+    dispatch(displaySuccessAlert({ msg: 'Login Successful! Redirecting...' }))
   } catch (error) {
     dispatch(displayErrorAlert({ msg: error.response.data.msg }))
   }
@@ -47,7 +47,7 @@ export const updateUserThunk = async (dispatch, currentUser) => {
     const { user, location } = data
 
     dispatch(updateUser({ user, location }))
-    dispatch(displaySuccessAlert('User Profile has been updated!'))
+    dispatch(displaySuccessAlert({ msg: 'User Profile has been updated!' }))
   } catch (error) {
     if (error.response.status !== 401) {
       dispatch(displayErrorAlert({ msg: error.response.data.msg }))
@@ -67,7 +67,10 @@ export const getCurrentUserThunk = async (dispatch) => {
 
     dispatch(getCurrentUser({ user, location }));
   } catch (error) {
-    if (error.response.status === 401) return;
+    if (error.response.status === 401) {
+      logoutUserThunk(dispatch)
+      return;
+    }
     logoutUserThunk(dispatch)
   }
 }

@@ -72,9 +72,12 @@ export const jobSlice = createSlice({
       state.searchType = 'all'
       state.sort = 'latest'
     },
+    changePage: (state, action) => {
+      state.page = action.payload.page
+    }
   }
 })
 
-export const { getJobsSuccess, setEditJob, toggleSidebar, clearValues, handleChange, clearFilters } = jobSlice.actions
+export const { getJobsSuccess, setEditJob, toggleSidebar, clearValues, handleChange, clearFilters, changePage } = jobSlice.actions
 
 export default jobSlice.reducer

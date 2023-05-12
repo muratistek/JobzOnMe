@@ -1,7 +1,7 @@
 import authFetch from "../../../utils/authFetch";
 import { setLoading, clearLoading } from "../alert/alertSlice";
-// import {logoutUser}
-import { showStats, changePage } from './statSlice';
+import { logoutUserThunk } from "../user/userThunk";
+import { showStats } from './statSlice';
 import { clearAlertThunk } from "../alert/alertThunk";
 
 export const showStatsThunk = async (dispatch) => {
@@ -17,12 +17,8 @@ export const showStatsThunk = async (dispatch) => {
 
     dispatch(clearLoading());
   } catch (error) {
-    // logoutUser()
+    logoutUserThunk(dispatch)
   }
 
   clearAlertThunk(dispatch);
-}
-
-export const changePageThunk = async (dispatch, page) => {
-  dispatch(changePage({ page }))
 }
