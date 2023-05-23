@@ -1,6 +1,11 @@
 # JobzOnMe
 
-## Keep track of your job applications
+## Keep track of your job applications:
+JobzOnMe is a powerful web application designed to streamline your job application process. With its intuitive interface and robust features, it empowers users to efficiently track and manage their job applications.
+
+Built using cutting-edge technologies such as ReactJS, Redux, and Styled Components on the front-end, and ExpressJS, NodeJS, and MongoDB on the back-end, JobzOnMe offers a seamless MERN stack experience. The application prioritizes security by implementing authentication using JWT tokens with 'HttpOnly' cookies, password encryption, and advanced measures like limiting IP connections per minute and sanitizing user input. Additionally, JobzOnMe enhances user experience with a search feature utilizing JS Debounce, ensuring smooth and efficient job searching. 
+
+Experience improved security, stability, and convenience with JobzOnMe as your go-to job application tracking solution.
 
 ### Used Technologies:
 
